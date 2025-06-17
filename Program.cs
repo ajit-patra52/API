@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connStr = builder.Configuration.GetConnectionString("Default");
 if (!string.IsNullOrEmpty(connStr))
 {
-    builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connStr));
+    _ = builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connStr));
 }
 
 builder.Services.AddControllers();
@@ -16,11 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLogging();
 
-
-
 // Register custom services
 builder.Services.AddScopedServices();
-
 
 var app = builder.Build();
 app.UseExceptionMiddleware();

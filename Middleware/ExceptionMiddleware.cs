@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace WebAPI6.Middleware
 {
@@ -23,14 +20,14 @@ namespace WebAPI6.Middleware
             try
             {
                 // Call the next delegate/middleware in the pipeline
-                 await _next(httpContext);
+                await _next(httpContext);
             }
             catch (Exception ex)
             {
                 // Log the exception
-                _logger.LogError(ex, "An unhandled exception has occurred while processing the request.");              
+                _logger.LogError(ex, "An unhandled exception has occurred while processing the request.");
                 await HandleExceptionAsync(httpContext, ex);
-            }            
+            }
         }
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
@@ -48,5 +45,5 @@ namespace WebAPI6.Middleware
             return context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }
-   
+
 }

@@ -3,7 +3,7 @@ using WebAPI6.Models;
 
 namespace WebAPI6
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -12,7 +12,7 @@ namespace WebAPI6
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>()
+            _ = modelBuilder.Entity<Employee>()
                 .HasKey(e => e.EmployeeId); // Define primary key
         }
     }

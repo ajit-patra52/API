@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Concurrent;
 using WebAPI6.Models;
 using WebAPI6.Repository;
@@ -58,7 +57,7 @@ namespace WebAPI6.UnitOfWork
                 if (!_repositories.ContainsKey(typeof(IEmployeeRepository)))
                 {
                     var employeeRepository = new EmployeeRepository(_context);
-                    _repositories.TryAdd(typeof(IEmployeeRepository), employeeRepository);
+                    _ = _repositories.TryAdd(typeof(IEmployeeRepository), employeeRepository);
                 }
                 return (IRepository<T>)_repositories[typeof(IEmployeeRepository)];
             }
@@ -66,13 +65,10 @@ namespace WebAPI6.UnitOfWork
             if (!_repositories.ContainsKey(typeof(T)))
             {
                 var repository = new Repository<T>(_context);
-                _repositories.TryAdd(typeof(T), repository);
+                _ = _repositories.TryAdd(typeof(T), repository);
             }
             return (IRepository<T>)_repositories[typeof(T)];
         }
-
-       
-
         public void Dispose()
         {
             _transaction?.Dispose();

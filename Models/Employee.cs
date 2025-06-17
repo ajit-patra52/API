@@ -5,7 +5,7 @@ namespace WebAPI6.Models
 {
     public class Employee
     {
-        [Key]       
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmployeeId { get; set; }
         [MaxLength(100)]

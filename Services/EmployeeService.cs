@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAPI6.Models;
+﻿using WebAPI6.Models;
 using WebAPI6.Repository.Employee;
 using WebAPI6.UnitOfWork;
 
@@ -39,9 +37,9 @@ namespace WebAPI6.Services
                 //await _context.Employees.AddAsync(newEmployee); // Add to context
                 //await _context.SaveChangesAsync(); // Save changes
 
-                
+
                 await _employeeRepository.AddAsync(newEmployee);
-                await _unitOfWork.SaveChangesAsync();               
+                _ = await _unitOfWork.SaveChangesAsync();
                 return newEmployee; // Return the added employee
             }
             catch (Exception ex)
@@ -49,7 +47,7 @@ namespace WebAPI6.Services
                 _logger.LogError(ex, "An error occurred while adding an employee.");
                 return null; // Operation failed
             }
-        }     
+        }
 
 
         public async Task<Employee?> GetById(int id)
@@ -62,7 +60,7 @@ namespace WebAPI6.Services
                 return await _employeeRepository.GetByIdAsync(id) ?? null; // Use repository method
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception (e.g., using a logging framework)
                 return null; // Return null on failure
@@ -81,7 +79,7 @@ namespace WebAPI6.Services
 
                 return await _employeeRepository.GetEmployeesByNameAsync(name) ?? new List<Employee>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception (e.g., using a logging framework)
                 return new List<Employee>(); // Return an empty list on failure
@@ -121,7 +119,7 @@ namespace WebAPI6.Services
                 await _employeeRepository.UpdateAsync(employee);
 
                 // Save changes to ensure the update is persisted
-                await _unitOfWork.SaveChangesAsync();
+                _ = await _unitOfWork.SaveChangesAsync();
 
                 return employee; // Return the updated employee
             }
@@ -138,11 +136,11 @@ namespace WebAPI6.Services
             try
             {
                 // Use repository method to delete the employee
-              var res= await _employeeRepository.DeleteAsync(id);
+                var res = await _employeeRepository.DeleteAsync(id);
                 if (res)
                 {
                     // Save changes to ensure the deletion is persisted
-                    await _unitOfWork.SaveChangesAsync();
+                    _ = await _unitOfWork.SaveChangesAsync();
 
                     return res; // Return true if the deletion was successful
                 }
@@ -158,7 +156,6 @@ namespace WebAPI6.Services
 
         public async Task<List<Employee>> GetEmployeeList()
         {
-            
             try
             {
                 //var repository = _unitOfWork.Repository<Employee>();
@@ -167,7 +164,7 @@ namespace WebAPI6.Services
                 // return await _context.Employees.AsNoTracking().ToListAsync();
                 return await _employeeRepository.GetAllAsync() as List<Employee> ?? new List<Employee>(); // Use repository method
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception (e.g., using a logging framework)
                 return new List<Employee>(); // Return an empty list on failure
@@ -195,7 +192,7 @@ namespace WebAPI6.Services
         {
             var dummyEmployees = GenerateDummyEmployees(count);
             await _employeeRepository.BulkAddEmployee(dummyEmployees);
-            await _unitOfWork.SaveChangesAsync(); // Ensure changes are saved to the database
+            _ = await _unitOfWork.SaveChangesAsync(); // Ensure changes are saved to the database
         }
     }
 }

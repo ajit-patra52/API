@@ -23,7 +23,7 @@ namespace WebAPI6.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var employees = await _employeeService.GetEmployeeList(); 
+            var employees = await _employeeService.GetEmployeeList();
             if (employees == null || !employees.Any())
             {
                 return NotFound("No employees found.");
@@ -88,7 +88,7 @@ namespace WebAPI6.Controllers
 
                 return Ok(updatedEmployee); // Return 200 with the updated employee
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception (e.g., using a logging framework)
                 return StatusCode(500, "An error occurred while updating the employee."); // Return 500 on failure

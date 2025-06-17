@@ -25,12 +25,12 @@ namespace WebAPI6.Repository
 
         public async Task AddAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
+            _ = await _dbSet.AddAsync(entity);
         }
 
         public Task UpdateAsync(T entity)
         {
-            _dbSet.Update(entity); // Removed 'await' as DbSet.Update is a synchronous method
+            _ = _dbSet.Update(entity); // Removed 'await' as DbSet.Update is a synchronous method
             return Task.CompletedTask; // Return a completed task to maintain async signature
         }
 
@@ -39,7 +39,7 @@ namespace WebAPI6.Repository
             var entity = await GetByIdAsync(id);
             if (entity != null)
             {
-                _dbSet.Remove(entity);
+                _ = _dbSet.Remove(entity);
                 return true;
             }
             return false;

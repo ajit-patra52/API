@@ -13,7 +13,7 @@ namespace WebAPI6.Repository.Employee
 
         public async Task BulkAddEmployee(List<Models.Employee> employees)
         {
-            await _context.Set<Models.Employee>().AddRangeAsync(employees);            
+            await _context.Set<Models.Employee>().AddRangeAsync(employees);
         }
 
         public async Task<List<Models.Employee>> GetEmployeesByNameAsync(string name)
