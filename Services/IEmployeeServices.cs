@@ -5,7 +5,7 @@ namespace WebAPI6.Services
     public interface IEmployeeServices
     {
         Task<List<Employee>> GetEmployeeList();
-        Task<Employee> GetById(int id);
+        Task<Employee?> GetById(int id);
 
         Task<Employee?> AddEmployee(Employee employee);
 
