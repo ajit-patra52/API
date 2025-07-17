@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using WebAPI6;
 using WebAPI6.Extensions;
+using WebAPI6.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,19 +65,14 @@ builder.Services.AddResponseCompression(options =>
 
 // Register custom services
 builder.Services.AddScopedServices();
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    _ = app.UseDeveloperExceptionPage();
-    app.UseHttpLogging();
 
-}
-else
-{
-    _ = app.UseHsts();
-}
+app.UseCorrelationIdMiddleware();
+app.UseHttpLogging();
 app.UseExceptionMiddleware();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
